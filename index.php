@@ -13,7 +13,7 @@ session_start();
 <div class="container">
     <div class="card hero">
         <h1>Mellow Millionaire</h1>
-        <p>A PHP game show project starter. Register, log in, and get ready to build the full experience.</p>
+        <p>This starter version</p>
         <div class="btn-row" style="justify-content:center;">
             <a class="btn" href="register.php">Register</a>
             <a class="btn secondary" href="login.php">Login</a>
