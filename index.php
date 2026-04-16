@@ -1,5 +1,7 @@
 <?php
 session_start();
+$lastUser = $_COOKIE['mellow_last_user'] ?? 'Guest';
+$lastVisit = $_COOKIE['mellow_last_visit'] ?? 'First visit';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,13 +13,46 @@ session_start();
 </head>
 <body>
 <div class="container">
+    <div class="nav">
+        <strong>Mellow Millionaire</strong>
+        <div class="nav-links">
+            <a class="btn secondary" href="register.php">Register</a>
+            <a class="btn" href="login.php">Login</a>
+            <a class="btn alt" href="leaderboard.php">Leaderboard</a>
+        </div>
+    </div>
+
     <div class="card hero">
         <h1>Mellow Millionaire</h1>
-        <p>This starter version</p>
+        <p>Do you think you have the skills to be a Millionaire?</p>
+        <p class="small">Last saved user: <strong><?php echo htmlspecialchars($lastUser, ENT_QUOTES, 'UTF-8'); ?></strong> · Last visit: <strong><?php echo htmlspecialchars($lastVisit, ENT_QUOTES, 'UTF-8'); ?></strong></p>
         <div class="btn-row" style="justify-content:center;">
-            <a class="btn" href="register.php">Register</a>
-            <a class="btn secondary" href="login.php">Login</a>
-            <a class="btn" href="leaderboard.php">Leaderboard</a>
+            <a class="btn secondary" href="register.php">Create Account</a>
+            <a class="btn" href="login.php">Sign In</a>
+            <a class="btn alt" href="leaderboard.php">See Top Scores</a>
+        </div>
+    </div>
+
+    <div class="grid" style="margin-top:18px;">
+        <div class="card">
+            <h2>How it works</h2>
+            <ul class="list-clean">
+                <li>Register at least two players.</li>
+                <li>Log in as one player and choose the second player in the lobby.</li>
+                <li>Take turns answering ten questions.</li>
+                <li>Use the one-time 50:50 lifeline wisely.</li>
+                <li>Finish the round and save scores to the leaderboard.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h2>Project-friendly features</h2>
+            <ul class="list-clean">
+                <li>Server-side PHP game logic only</li>
+                <li>Sessions on protected pages</li>
+                <li>Cookies for cross-visit persistence</li>
+                <li>No JavaScript and no database</li>
+                <li>Responsive HTML5 and CSS3 layout</li>
+            </ul>
         </div>
     </div>
 </div>
