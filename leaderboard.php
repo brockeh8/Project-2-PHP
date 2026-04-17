@@ -26,6 +26,26 @@ $entries = getTopScores(loadLeaderboard($leaderboardFile), 10);
             <?php endif; ?>
         </div>
     </div>
+
+    <div class="card">
+        <h1>Leaderboard</h1>
+        <p class="muted">This page stays visible without requiring a new login.</p>
+        <?php if (empty($entries)): ?>
+            <p>No scores have been saved yet.</p>
+        <?php else: ?>
+            <table class="table">
+                <tr><th>Rank</th><th>Username</th><th>Score</th><th>Date</th></tr>
+                <?php foreach ($entries as $index => $entry): ?>
+                    <tr>
+                        <td><?php echo $index + 1; ?></td>
+                        <td><?php echo h($entry['username']); ?></td>
+                        <td><?php echo (int) $entry['score']; ?></td>
+                        <td><?php echo h($entry['date']); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        <?php endif; ?>
+    </div>
 </div>
 </body>
 </html>
