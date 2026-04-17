@@ -47,3 +47,35 @@ $history = $_SESSION['scores_history'] ?? [];
             <a class="btn danger" href="logout.php">Logout</a>
         </div>
     </div>
+    
+    <div class="grid" style="margin-top:18px;">
+        <div class="card">
+            <h2>Final Scores</h2>
+            <table class="table">
+                <tr><th>Player</th><th>Score</th></tr>
+                <?php foreach ($scores as $player => $score): ?>
+                    <tr><td><?php echo h($player); ?></td><td><?php echo (int) $score; ?></td></tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+        <div class="card">
+            <h2>Round Summary</h2>
+            <?php if (empty($history)): ?>
+                <p>No round history available.</p>
+            <?php else: ?>
+                <table class="table">
+                    <tr><th>Player</th><th>Correct</th><th>Difficulty</th></tr>
+                    <?php foreach ($history as $item): ?>
+                        <tr>
+                            <td><?php echo h($item['player']); ?></td>
+                            <td><?php echo $item['correct'] ? 'Yes' : 'No'; ?></td>
+                            <td><?php echo (int) $item['difficulty']; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+</body>
+</html>
