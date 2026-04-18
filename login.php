@@ -1,27 +1,25 @@
 <?php
 session_start();
-require_once 'includes/functions.php';
+require_once __DIR__ . '/includes/functions.php';
 
-$userFile = __DIR__ . '/data/users.txt';
-$error = '';
-$lastUser = $_COOKIE['mellow_last_user'] ?? '';
+$username = $_COOKIE['mellow_last_user'] ?? '';
+$password = '';
+$message = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim((string) filter_input(INPUT_POST, 'username', FILTER_UNSAFE_RAW));
-    $password = trim((string) filter_input(INPUT_POST, 'password', FILTER_UNSAFE_RAW));
-
-    $user = findUser($userFile, $username);
+    $username = trim((string)filter_input(INPUT_POST, 'username', FILTER_UNSAFE_RAW));
+    $password = trim((string)filter_input(INPUT_POST, 'password', FILTER_UNSAFE_RAW));
 
     if ($username === '' || $password === '') {
-        $error = 'Please enter your username and password.';
-    } elseif (!$user || !password_verify($password, $user['password'])) {
-        $error = 'Invalid login.';
-    } else {
+        $message = 'Please enter both username and password.';
+    } elseif (verifyLogin($username, $password)) {
         $_SESSION['logged_in'] = true;
-        $_SESSION['username'] = $user['username'];
-        setcookie('mellow_last_user', $user['username'], time() + (60 * 60 * 24 * 30));
+        $_SESSION['username'] = $username;
+        setcookie('mellow_last_user', $username, time() + (60 * 60 * 24 * 14));
         header('Location: dashboard.php');
         exit;
+    } else {
+        $message = 'Invalid login. Please try again.';
     }
 }
 ?>
@@ -30,24 +28,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login - Mellow Millionaire</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div class="nav"><div class="nav-inner"><div class="brand">Mellow Millionaire</div><div class="nav-links"><a href="index.php">Home</a><a href="register.php">Register</a><a href="leaderboard.php">Leaderboard</a></div></div></div>
 <div class="container">
-    <div class="nav"><a href="index.php">Home</a><span class="muted">Starter Version</span></div>
     <div class="card">
         <h1>Login</h1>
-        <?php if ($error !== ''): ?><div class="notice error"><?php echo h($error); ?></div><?php endif; ?>
+        <?php if ($message !== ''): ?>
+            <div class="message error"><?php echo h($message); ?></div>
+        <?php endif; ?>
         <form method="post" action="login.php">
-            <div>
-                <label for="username">Username</label>
-                <input id="username" name="username" value="<?php echo h(oldValue('username', $lastUser)); ?>">
-            </div>
-            <div>
-                <label for="password">Password</label>
-                <input id="password" type="password" name="password">
-            </div>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" value="<?php echo h($username); ?>">
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" value="<?php echo h($password); ?>">
+
             <button type="submit">Login</button>
         </form>
     </div>
