@@ -1,35 +1,32 @@
 <?php
-require_once 'includes/auth.php';
-require_once 'includes/functions.php';
+require_once __DIR__ . '/includes/functions.php';
+requireLogin();
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Dashboard - Mellow Millionaire</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div class="nav"><div class="nav-inner"><div class="brand">Mellow Millionaire</div><div class="nav-links"><a href="dashboard.php">Dashboard</a><a href="leaderboard.php">Leaderboard</a><a href="logout.php">Logout</a></div></div></div>
 <div class="container">
-    <div class="nav">
-        <div>Logged in as <strong><?php echo h($_SESSION['username']); ?></strong></div>
-        <div class="btn-row">
-            <a class="btn secondary" href="leaderboard.php">Leaderboard</a>
-            <a class="btn" href="logout.php">Logout</a>
-        </div>
+    <div class="card hero">
+        <h1>Welcome, <?php echo h($_SESSION['username']); ?></h1>
+        <p>This is the main player dashboard. Start a new match, then choose the second registered player in the lobby.</p>
+        <a class="button secondary" href="lobby.php">Go to Lobby</a>
     </div>
+
     <div class="grid">
         <div class="card">
-            <h2>Starter Dashboard</h2>
-            <p>This starter version</p>
-            <div class="btn-row">
-                <a class="btn" href="game.php">Game Placeholder</a>
-            </div>
+            <h2>Rules</h2>
+            <p>Each player answers 3 questions for a total of 6 turns. Correct answers earn points. Each player gets one pass lifeline for the whole game.</p>
         </div>
         <div class="card">
-            <h2>What is ready</h2>
-            <p>Sessions, cookies, sticky forms, password hashing, and the basic page structure are already set up for you.</p>
+            <h2>Strong but manageable</h2>
+            <p>This version is meant to feel complete without being too advanced for the class. It focuses on clear PHP logic and clean structure.</p>
         </div>
     </div>
 </div>
