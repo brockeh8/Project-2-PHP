@@ -7,6 +7,11 @@ if (empty($_SESSION['players']) || empty($_SESSION['questions'])) {
     exit;
 }
 
+if (!empty($_SESSION['game_complete'])) {
+    header('Location: results.php');
+    exit;
+}
+
 $players = $_SESSION['players'];
 $currentPlayer = $players[$_SESSION['turn_index'] % count($players)];
 $question = $_SESSION['questions'][$_SESSION['question_index']];
@@ -17,7 +22,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = trim((string)filter_input(INPUT_POST, 'action', FILTER_UNSAFE_RAW));
     $selectedAnswer = trim((string)filter_input(INPUT_POST, 'answer', FILTER_UNSAFE_RAW));
 
-    if ($action === 'answer') {
+    if ($action === 'pass') {
+        if ($_SESSION['passes'][$currentPlayer] > 0) {
+            $_SESSION['passes'][$currentPlayer]--;
+            $_SESSION['feedback'] = $currentPlayer . ' used their pass lifeline.';
+            $_SESSION['question_index']++;
+            $_SESSION['turn_index']++;
+        } else {
+            $_SESSION['feedback'] = $currentPlayer . ' already used their pass lifeline.';
+        }
+    } elseif ($action === 'answer') {
         if ($selectedAnswer === '') {
             $_SESSION['feedback'] = 'Please select an answer before submitting.';
         } else {
@@ -33,6 +47,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['question_index']++;
             $_SESSION['turn_index']++;
         }
+    }
+
+    if ($_SESSION['question_index'] >= count($_SESSION['questions'])) {
+        $_SESSION['game_complete'] = true;
+        header('Location: results.php');
+        exit;
     }
 
     header('Location: game.php');
@@ -71,6 +91,7 @@ $label = difficultyLabel($question['difficulty']);
 
         <div class="badge">Current Player: <?php echo h($currentPlayer); ?></div>
         <div class="badge">Difficulty: <?php echo h($label); ?></div>
+        <div class="badge">Passes Left: <?php echo (int)$_SESSION['passes'][$currentPlayer]; ?></div>
 
         <p><strong><?php echo h($question['question']); ?></strong></p>
 
@@ -85,6 +106,7 @@ $label = difficultyLabel($question['difficulty']);
             </div>
 
             <button type="submit" name="action" value="answer">Submit Answer</button>
+            <button class="secondary" type="submit" name="action" value="pass">Use Pass</button>
         </form>
     </div>
 
@@ -93,6 +115,7 @@ $label = difficultyLabel($question['difficulty']);
             <div class="card">
                 <h2><?php echo h($name); ?></h2>
                 <p>Score: <strong><?php echo (int)$score; ?></strong></p>
+                <p>Passes left: <strong><?php echo (int)$_SESSION['passes'][$name]; ?></strong></p>
             </div>
         <?php endforeach; ?>
     </div>
