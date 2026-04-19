@@ -11,10 +11,29 @@ $prizeLadder = [
 ];
 
 if (isset($_GET['start'])) {
-    $pool = $questions;
-    shuffle($pool);
+    $easyQuestions = [];
+    $mediumQuestions = [];
+    $hardQuestions = [];
 
-    $_SESSION['game_questions'] = array_slice($pool, 0, 15);
+    foreach ($questions as $question) {
+        if ($question['difficulty'] === 'easy') {
+            $easyQuestions[] = $question;
+        } elseif ($question['difficulty'] === 'medium') {
+            $mediumQuestions[] = $question;
+        } elseif ($question['difficulty'] === 'hard') {
+            $hardQuestions[] = $question;
+        }
+    }
+
+    shuffle($easyQuestions);
+    shuffle($mediumQuestions);
+    shuffle($hardQuestions);
+
+    $selectedEasy = array_slice($easyQuestions, 0, 5);
+    $selectedMedium = array_slice($mediumQuestions, 0, 5);
+    $selectedHard = array_slice($hardQuestions, 0, 5);
+
+    $_SESSION['game_questions'] = array_merge($selectedEasy, $selectedMedium, $selectedHard);
     $_SESSION['current_level'] = 0;
     $_SESSION['current_winnings'] = 0;
     $_SESSION['game_complete'] = false;
@@ -100,18 +119,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             $_SESSION['feedback'] = 'Correct! Moving on to the next question.';
+            header('Location: game.php');
+            exit;
         } else {
+            if ($currentLevel >= 9) {
+                $_SESSION['current_winnings'] = 32000;
+            } elseif ($currentLevel >= 4) {
+                $_SESSION['current_winnings'] = 1000;
+            } else {
+                $_SESSION['current_winnings'] = 0;
+            }
+
             $_SESSION['feedback'] = 'Incorrect. The correct answer was ' . $currentQuestion['answer'] . '.';
             $_SESSION['game_complete'] = true;
             header('Location: results.php');
             exit;
         }
-
-        header('Location: game.php');
-        exit;
     }
 }
-
 $displayLevel = $currentLevel + 1;
 $currentPrize = $prizeLadder[$currentLevel];
 ?>

@@ -12,7 +12,7 @@ $lastVisit = $_COOKIE['mellow_last_visit'] ?? 'First visit';
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    
+
 <div class="money-rain" aria-hidden="true">
   <span class="coin" style="--d:0s;   --x:10%; --s:0.8">🪙</span>
   <span class="coin" style="--d:1.2s; --x:25%; --s:1.0">🪙</span>
@@ -49,16 +49,17 @@ $lastVisit = $_COOKIE['mellow_last_visit'] ?? 'First visit';
         <div class="card">
             <h2>How it works</h2>
             <ul class="list-clean">
-                <li>Register at least two players.</li>
-                <li>Log in as one player and choose the second player in the lobby.</li>
-                <li>Take turns answering ten questions.</li>
-                <li>Use the one-time 50:50 lifeline wisely.</li>
-                <li>Finish the round and save scores to the leaderboard.</li>
+                <li>Register as a player to join the race to become a millionare!</li>
+                <li>Log in and decide ifyou are ready to begin.</li>
+                <li>Answer 15 questions correctly to win!</li>
+                <li>Use the one-time lifeline wisely to get out of a difficult question!</li>
+                <li>Bank your earnings after each question and make your way to the podium...</li>
             </ul>
         </div>
         <div class="card">
             <h2>About</h2>
-            <p>Mellow Millionaire is a simple PHP quiz game designed for learning purposes. It features user registration, login, a public leaderboard, and a turn-based quiz format.</p>
+            <p>Mellow Millionaire is your chance to become great and reach wealth people dream of do you have what it takes?</p>
+        </div>
     </div>
 </div>
 </body>

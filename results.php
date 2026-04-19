@@ -12,19 +12,19 @@ $username = $_SESSION['username'];
 $winnings = $_SESSION['current_winnings'] ?? 0;
 $walkedAway = $_SESSION['walked_away'] ?? false;
 
-if (empty($_SESSION['score_saved'])) {
+if (empty($_SESSION['score_saved']) && $winnings > 0) {
     saveLeaderboardEntry($username, $winnings);
     $_SESSION['score_saved'] = true;
 }
 
 if ($walkedAway) {
-    $message = 'You walked away with your winnings.';
+    $message = 'You walked away with your winnings. Have some backbone and try for more next time!';
 } elseif ($winnings >= 1000000) {
-    $message = 'Congratulations! You won one million dollars!';
+    $message = 'Congratulations! You won one million dollars! You are now a Mellow Millionaire!';
 } elseif ($winnings > 0) {
-    $message = 'Game over. You still earned a solid amount.';
+    $message = 'Game over. You still earned a solid amount wish you got to keep it lol';
 } else {
-    $message = 'Game over. You left with $0 this round.';
+    $message = 'Game over. You left with $0 this round... seriously?';
 }
 ?>
 <!DOCTYPE html>
