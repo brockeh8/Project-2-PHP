@@ -49,8 +49,10 @@ function usernameExists($username) {
 }
 
 function registerUser($username, $password) {
-    $line = $username . '|' . password_hash($password, PASSWORD_DEFAULT) . PHP_EOL;
-    file_put_contents(usersFile(), $line, FILE_APPEND | LOCK_EX);
+    $file = __DIR__ . '/../data/users.txt';
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $line = $username . '|' . $hashedPassword . PHP_EOL;
+    file_put_contents($file, $line, FILE_APPEND);
 }
 
 function verifyLogin($username, $password) {

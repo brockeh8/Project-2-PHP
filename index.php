@@ -12,6 +12,18 @@ $lastVisit = $_COOKIE['mellow_last_visit'] ?? 'First visit';
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+<div class="money-rain" aria-hidden="true">
+  <span class="coin" style="--d:0s;   --x:10%; --s:0.8">🪙</span>
+  <span class="coin" style="--d:1.2s; --x:25%; --s:1.0">🪙</span>
+  <span class="coin" style="--d:2.5s; --x:42%; --s:0.7">🪙</span>
+  <span class="coin" style="--d:0.7s; --x:60%; --s:0.9">🪙</span>
+  <span class="coin" style="--d:3.1s; --x:75%; --s:0.8">🪙</span>
+  <span class="coin" style="--d:1.8s; --x:88%; --s:1.05">🪙</span>
+  <span class="coin" style="--d:4.0s; --x:5%;  --s:0.65">🪙</span>
+  <span class="coin" style="--d:2.2s; --x:50%; --s:0.75">🪙</span>
+</div>
+
 <div class="container">
     <div class="nav">
         <strong>Mellow Millionaire</strong>
@@ -37,22 +49,16 @@ $lastVisit = $_COOKIE['mellow_last_visit'] ?? 'First visit';
         <div class="card">
             <h2>How it works</h2>
             <ul class="list-clean">
-                <li>Register at least two players.</li>
-                <li>Log in as one player and choose the second player in the lobby.</li>
-                <li>Take turns answering ten questions.</li>
-                <li>Use the one-time 50:50 lifeline wisely.</li>
-                <li>Finish the round and save scores to the leaderboard.</li>
+                <li>Register as a player to join the race to become a millionare!</li>
+                <li>Log in and decide ifyou are ready to begin.</li>
+                <li>Answer 15 questions correctly to win!</li>
+                <li>Use the one-time lifeline wisely to get out of a difficult question!</li>
+                <li>Bank your earnings after each question and make your way to the podium...</li>
             </ul>
         </div>
         <div class="card">
-            <h2>Project-friendly features</h2>
-            <ul class="list-clean">
-                <li>Server-side PHP game logic only</li>
-                <li>Sessions on protected pages</li>
-                <li>Cookies for cross-visit persistence</li>
-                <li>No JavaScript and no database</li>
-                <li>Responsive HTML5 and CSS3 layout</li>
-            </ul>
+            <h2>About</h2>
+            <p>Mellow Millionaire is your chance to become great and reach wealth people dream of do you have what it takes?</p>
         </div>
     </div>
 </div>
