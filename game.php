@@ -11,6 +11,34 @@ $players = $_SESSION['players'];
 $currentPlayer = $players[$_SESSION['turn_index'] % count($players)];
 $question = $_SESSION['questions'][$_SESSION['question_index']];
 $feedback = $_SESSION['feedback'] ?? '';
+$_SESSION['feedback'] = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $action = trim((string)filter_input(INPUT_POST, 'action', FILTER_UNSAFE_RAW));
+    $selectedAnswer = trim((string)filter_input(INPUT_POST, 'answer', FILTER_UNSAFE_RAW));
+
+    if ($action === 'answer') {
+        if ($selectedAnswer === '') {
+            $_SESSION['feedback'] = 'Please select an answer before submitting.';
+        } else {
+            $points = 100 * $question['difficulty'];
+
+            if ($selectedAnswer === $question['answer']) {
+                $_SESSION['round_scores'][$currentPlayer] += $points;
+                $_SESSION['feedback'] = $currentPlayer . ' was correct and earned ' . $points . ' points.';
+            } else {
+                $_SESSION['feedback'] = $currentPlayer . ' was incorrect. The correct answer was ' . $question['answer'] . '.';
+            }
+
+            $_SESSION['question_index']++;
+            $_SESSION['turn_index']++;
+        }
+    }
+
+    header('Location: game.php');
+    exit;
+}
+
 $label = difficultyLabel($question['difficulty']);
 ?>
 <!DOCTYPE html>
