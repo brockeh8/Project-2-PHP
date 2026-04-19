@@ -12,6 +12,18 @@ $lastVisit = $_COOKIE['mellow_last_visit'] ?? 'First visit';
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    
+<div class="money-rain" aria-hidden="true">
+  <span class="coin" style="--d:0s;   --x:10%; --s:0.8">🪙</span>
+  <span class="coin" style="--d:1.2s; --x:25%; --s:1.0">🪙</span>
+  <span class="coin" style="--d:2.5s; --x:42%; --s:0.7">🪙</span>
+  <span class="coin" style="--d:0.7s; --x:60%; --s:0.9">🪙</span>
+  <span class="coin" style="--d:3.1s; --x:75%; --s:0.8">🪙</span>
+  <span class="coin" style="--d:1.8s; --x:88%; --s:1.05">🪙</span>
+  <span class="coin" style="--d:4.0s; --x:5%;  --s:0.65">🪙</span>
+  <span class="coin" style="--d:2.2s; --x:50%; --s:0.75">🪙</span>
+</div>
+
 <div class="container">
     <div class="nav">
         <strong>Mellow Millionaire</strong>

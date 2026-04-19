@@ -11,6 +11,16 @@ requireLogin();
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div class="coin-rain" aria-hidden="true">
+    <span class="coin coin1"></span>
+    <span class="coin coin2"></span>
+    <span class="coin coin3"></span>
+    <span class="coin coin4"></span>
+    <span class="coin coin5"></span>
+    <span class="coin coin6"></span>
+    <span class="coin coin7"></span>
+    <span class="coin coin8"></span>
+</div>
 <div class="nav"><div class="nav-inner"><div class="brand">Mellow Millionaire</div><div class="nav-links"><a href="dashboard.php">Dashboard</a><a href="leaderboard.php">Leaderboard</a><a href="logout.php">Logout</a></div></div></div>
 <div class="container">
     <div class="card hero">
@@ -26,7 +36,7 @@ requireLogin();
         </div>
         <div class="card">
             <h2>Scoring</h2>
-            <p>Easy questions are worth 10 points, medium 20 points, and hard 30 points. The player with the most points at the end wins.</p>
+            <p>Easy questions are worth 100 points, medium 200 points, and hard 300 points. The player with the most points at the end wins.</p>
     </div>
 </div>
 </body>
