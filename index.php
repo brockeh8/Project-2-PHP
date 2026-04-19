@@ -45,15 +45,8 @@ $lastVisit = $_COOKIE['mellow_last_visit'] ?? 'First visit';
             </ul>
         </div>
         <div class="card">
-            <h2>Project-friendly features</h2>
-            <ul class="list-clean">
-                <li>Server-side PHP game logic only</li>
-                <li>Sessions on protected pages</li>
-                <li>Cookies for cross-visit persistence</li>
-                <li>No JavaScript and no database</li>
-                <li>Responsive HTML5 and CSS3 layout</li>
-            </ul>
-        </div>
+            <h2>About</h2>
+            <p>Mellow Millionaire is a simple PHP quiz game designed for learning purposes. It features user registration, login, a public leaderboard, and a turn-based quiz format.</p>
     </div>
 </div>
 </body>

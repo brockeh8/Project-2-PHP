@@ -25,9 +25,8 @@ requireLogin();
             <p>Each player answers 3 questions for a total of 6 turns. Correct answers earn points. Each player gets one pass lifeline for the whole game.</p>
         </div>
         <div class="card">
-            <h2>Strong but manageable</h2>
-            <p>This version is meant to feel complete without being too advanced for the class. It focuses on clear PHP logic and clean structure.</p>
-        </div>
+            <h2>Scoring</h2>
+            <p>Easy questions are worth 10 points, medium 20 points, and hard 30 points. The player with the most points at the end wins.</p>
     </div>
 </div>
 </body>
