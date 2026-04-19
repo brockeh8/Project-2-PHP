@@ -1,80 +1,52 @@
 <?php
-require_once 'includes/auth.php';
-require_once 'includes/functions.php';
+require_once __DIR__ . '/includes/functions.php';
+requireLogin();
 
-if (empty($_SESSION['players']) || empty($_SESSION['game_complete'])) {
-    header('Location: lobby.php');
+if (empty($_SESSION['round_scores'])) {
+    header('Location: dashboard.php');
     exit;
 }
 
-$leaderboardFile = __DIR__ . '/data/leaderboard.txt';
-$scores = $_SESSION['scores'];
+$scores = $_SESSION['round_scores'];
 arsort($scores);
-$winner = array_key_first($scores);
-$highScore = $scores[$winner];
-$_SESSION['winner'] = $winner;
+$names = array_keys($scores);
+$winner = count($names) > 1 && $scores[$names[0]] === $scores[$names[1]] ? 'Tie Game' : $names[0];
 
-if (empty($_SESSION['saved_results'])) {
-    $_SESSION['session_leaderboard'] = $_SESSION['session_leaderboard'] ?? [];
-    foreach ($_SESSION['scores'] as $player => $score) {
-        saveLeaderboardEntry($leaderboardFile, $player, $score);
-        $_SESSION['session_leaderboard'][] = [
-            'username' => $player,
-            'score' => $score
-        ];
+if (empty($_SESSION['result_saved'])) {
+    foreach ($_SESSION['round_scores'] as $name => $score) {
+        saveLeaderboardEntry($name, $score);
     }
-    $_SESSION['saved_results'] = true;
+    $_SESSION['result_saved'] = true;
 }
-
-$history = $_SESSION['scores_history'] ?? [];
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Results</title>
+    <title>Results - Mellow Millionaire</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div class="nav"><div class="nav-inner"><div class="brand">Mellow Millionaire</div><div class="nav-links"><a href="dashboard.php">Dashboard</a><a href="leaderboard.php">Leaderboard</a><a href="logout.php">Logout</a></div></div></div>
 <div class="container">
-    <div class="card center">
-        <h1>Round Complete</h1>
-        <p><strong><?php echo h($winner); ?></strong> wins this round with <strong><?php echo (int) $highScore; ?></strong> points.</p>
-        <div class="btn-row" style="justify-content:center;">
-            <a class="btn alt" href="leaderboard.php">View Leaderboard</a>
-            <a class="btn secondary" href="play_again.php">Play Again</a>
-            <a class="btn danger" href="logout.php">Logout</a>
-        </div>
+    <div class="card hero">
+        <h1>Game Results</h1>
+        <p><?php echo $winner === 'Tie Game' ? 'This round ended in a tie.' : h($winner) . ' won the round.'; ?></p>
     </div>
-    
-    <div class="grid" style="margin-top:18px;">
-        <div class="card">
-            <h2>Final Scores</h2>
-            <table class="table">
-                <tr><th>Player</th><th>Score</th></tr>
-                <?php foreach ($scores as $player => $score): ?>
-                    <tr><td><?php echo h($player); ?></td><td><?php echo (int) $score; ?></td></tr>
-                <?php endforeach; ?>
-            </table>
-        </div>
-        <div class="card">
-            <h2>Round Summary</h2>
-            <?php if (empty($history)): ?>
-                <p>No round history available.</p>
-            <?php else: ?>
-                <table class="table">
-                    <tr><th>Player</th><th>Correct</th><th>Difficulty</th></tr>
-                    <?php foreach ($history as $item): ?>
-                        <tr>
-                            <td><?php echo h($item['player']); ?></td>
-                            <td><?php echo $item['correct'] ? 'Yes' : 'No'; ?></td>
-                            <td><?php echo (int) $item['difficulty']; ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </table>
-            <?php endif; ?>
-        </div>
+
+    <div class="grid">
+        <?php foreach ($_SESSION['round_scores'] as $name => $score): ?>
+            <div class="card">
+                <h2><?php echo h($name); ?></h2>
+                <p>Final Score: <strong><?php echo (int)$score; ?></strong></p>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <div class="card">
+        <a class="button" href="leaderboard.php">View Leaderboard</a>
+        <a class="button secondary" href="lobby.php">Play Again</a>
     </div>
 </div>
 </body>
