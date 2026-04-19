@@ -1,4 +1,4 @@
-<!-- Sample questions -->
+
 <?php
 $questionBank = [
     ['question' => 'Which PHP superglobal stores data across multiple pages?', 'options' => ['$_POST', '$_SESSION', '$_GET', '$_COOKIE'], 'answer' => '$_SESSION', 'difficulty' => 1],
